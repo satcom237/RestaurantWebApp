@@ -1,4 +1,5 @@
 <?php
+
   include_once 'header.php';
 // change the value of $dbuser and $dbpass to your username and password
 	include 'includes/db-inc.php';
@@ -8,15 +9,21 @@
 		die('Could not connect: ' . mysql_error());
 	}
 // Retrieve name of table selected
-	$query = "SELECT username, password, firstname, lastname FROM User ";
+	$query = "SELECT restaurantName, cDescription FROM Coupon ";
 
 	$result = mysqli_query($conn, $query);
 	if (!$result) {
 		die("Query to show fields from table failed");
 	}
+
+  echo '<br><form class="search" action="redeem.php" method="post">
+        Redeem Coupons: <input type="text" name="c_name" placeholder="Enter Coupon..."><br>
+        <input type="submit">
+        </form></br>';
+
 // get number of columns in table
 	$fields_num = mysqli_num_fields($result);
-	echo "<h1S>Table: User </h1>";
+	echo "<h1>Table: Coupons </h1>";
 	echo "<table border='1'><tr>";
 
 // printing table headers

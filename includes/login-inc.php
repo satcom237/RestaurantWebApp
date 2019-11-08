@@ -15,12 +15,12 @@ if (isset($_POST['submit'])){
       exit();
     }
     else{
-      $sql = "SELECT * FROM employee WHERE username='$username'";
+      $sql = "SELECT * FROM User WHERE username='$username'";
       $result = mysqli_query($conn, $sql);
       $resultCheck = mysqli_num_rows($result);
       //error message username
       if($resultCheck < 1){
-        $message_status = "Invalid";
+        $message_status = "Wrong Username!";
         echo "<script type='text/javascript'>alert('$message_status');</script>";
         echo "<script type='text/javascript'> document.location = '../index.php'; </script>";
       }
@@ -28,13 +28,13 @@ if (isset($_POST['submit'])){
         if($row = mysqli_fetch_assoc($result)){
           //username exists build second salt query
           //$salt = $row['salt'];
-          $saltsql = "SELECT username FROM employee WHERE username='$username' AND password='$password'";
+          $saltsql = "SELECT username FROM User WHERE username='$username' AND password='$password'";
           $finalresult = mysqli_query($conn, $saltsql);
           if($finalrow = mysqli_fetch_assoc($finalresult)){
             /*Login successful - login user*/
             $_SESSION['username'] = $finalrow['username'];
-            //$_SESSION['firstname'] = $finalrow['firstName'];
-            //$_SESSION['lastname'] = $finalrow['lastName'];
+            $_SESSION['firstname'] = $finalrow['firstName'];
+            $_SESSION['lastname'] = $finalrow['lastName'];
             //$_SESSION['superhero'] = $username;
             header("Location: ../index.php?login==success");
             exit();
